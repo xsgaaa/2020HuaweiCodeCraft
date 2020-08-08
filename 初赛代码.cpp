@@ -88,9 +88,9 @@ void TopologySort()
 		q.pop();				//出队队首元素
 		for (Node *ptr = graph[cur].first; ptr; ptr = ptr->next)
 		{						//邻接点的入度减1
-			if (graph.find(ptr->v)==graph.end())  //图中不存在的点，可能是出度为0的点
-				continue;		                //为已经删除的结点，无需访问
-			if ((--state[ptr->v].indg) == 0)          //再次将入度为0的结点入队
+			if (graph.find(ptr->v)==graph.end())  		//图中不存在的点，可能是出度为0的点
+				continue;		                		//为已经删除的结点，无需访问
+			if ((--state[ptr->v].indg) == 0)          	//再次将入度为0的结点入队
 				q.push(ptr->v);
 		}
 		graph.erase(cur);		                //出队的元素必然构不成环，将其删除
@@ -198,13 +198,14 @@ int main()
 		state[v].indg++;
 		EdgeVec.emplace_back(u,v);		
 	}
+	
 	sort(EdgeVec.begin(), EdgeVec.end(), EdgeSort());		//排序边集
 	EdgeVec.shrink_to_fit();			//收缩到适当范围
 	Node *q=nullptr;
 	for (int i = 0,Size= EdgeVec.size(); i < Size; i++)
 	{
-		q = new Node(EdgeVec[i].v, graph[EdgeVec[i].u].first);//构造邻接表
-		graph[EdgeVec[i].u].first = q;						//在graph中的，出度必然大于0,不用统计
+		q = new Node(EdgeVec[i].v, graph[EdgeVec[i].u].first);		//构造邻接表
+		graph[EdgeVec[i].u].first = q;								//在graph中的，出度必然大于0,不用统计
 	}
 
 #ifdef DEBUG
